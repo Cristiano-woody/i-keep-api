@@ -45,4 +45,11 @@ export class UserService {
       throw new InvalidCredentialsError('Email or Password incorrect.');
     }
   }
+
+  async findOneByEmail(email:string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
+    return user
+  }
 }
