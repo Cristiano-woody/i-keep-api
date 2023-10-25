@@ -8,16 +8,18 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [forwardRef(() => AuthModule), 
-    TypeOrmModule.forFeature([User]),     
+  imports: [
+    forwardRef(() => AuthModule),
+    TypeOrmModule.forFeature([User]),
     JwtModule.registerAsync({
-    inject: [ConfigService],
-    useFactory: async (config:ConfigService) => ({
-      secret: config.get('JWT_SECRET_KEY'),
-      global: true,
-      signOptions: { expiresIn: '1h' }
-    })
-  }),],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        secret: config.get('JWT_SECRET_KEY'),
+        global: true,
+        signOptions: { expiresIn: '1h' },
+      }),
+    }),
+  ],
   controllers: [UserController],
   providers: [UserService],
   exports: [TypeOrmModule, UserService],

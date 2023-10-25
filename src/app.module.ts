@@ -14,7 +14,7 @@ import { config } from './config';
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: async (config:ConfigService) => ({
+      useFactory: async (config: ConfigService) => ({
         type: 'postgres',
         host: config.get('dbHost'),
         port: config.get('dbPort'),
@@ -23,8 +23,7 @@ import { config } from './config';
         database: config.get('Database'),
         entities: [User],
         synchronize: true,
-      })
-
+      }),
     }),
     UserModule,
     AuthModule,
