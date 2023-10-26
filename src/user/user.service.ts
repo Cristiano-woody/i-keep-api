@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entities/UserEntity';
+import { User } from 'src/user/entities/UserEntity';
 import { Repository } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 import UserAlreadyExistError from 'src/errors/UserAlreadyExistError';
@@ -14,7 +14,7 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    const allUsers = await this.userRepository.find();
+    const allUsers = await this.userRepository.find({relations:['notes']});
     return allUsers;
   }
 
@@ -50,6 +50,19 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { email: email },
     });
+    return user
+  }
+
+  async findOnebyID(id:string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+      relations: ['notes']
+    }).catch(err => {
+      console.log('cheguei')
+      throw new BadRequestException('User not found')
+    })
+    if(user.id != id ) {
+    }
     return user
   }
 }

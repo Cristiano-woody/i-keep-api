@@ -1,8 +1,8 @@
 // eslint-disable-next-line prettier/prettier
-import { Body, Controller, Get, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { CreateUserDto } from 'src/dtos/user/CreateUserDto';
-import { User } from 'src/entities/UserEntity';
-import { UserService } from 'src/services/UserService';
+import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { CreateUserDto } from 'src/user/dto/CreateUserDto';
+import { User } from 'src/user/entities/UserEntity';
+import { UserService } from 'src/user/user.service';
 import UserAlreadyExistError from 'src/errors/UserAlreadyExistError';
 import { AuthGuard } from 'src/auth/auth.guard';
 
@@ -23,8 +23,17 @@ export class UserController {
       return userCreated;
     } catch (err) {
       if (err instanceof UserAlreadyExistError) {
-        throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+        throw new BadRequestException(err.message)
       }
+    }
+  }
+
+  @Get(':id')
+  async findOnebyID(@Param('id') id: string): Promise<User> {
+    try {
+      return await this.userService.findOnebyID(id);
+    } catch (err) {
+      throw new BadRequestException(err.message)
     }
   }
 }
