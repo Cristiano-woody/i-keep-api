@@ -1,20 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { Repository } from 'typeorm';
 import { Note } from './entities/note.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class NoteService {
-  constructor(@InjectRepository(Note) private noteRepository: Repository<Note>) {}
+  constructor(@InjectRepository(Note) private noteRepository: Repository<Note>, private userService: UserService) {}
 
-  create(createNoteDto: CreateNoteDto) {
-    // const newNote = new Note()
-    // newNote.title = createNoteDto.title
-    // newNote.description = createNoteDto.description
-    // newNote.user = createNoteDto.user
-    // return this.noteRepository.save(newNote)
+  async create(createNoteDto: CreateNoteDto) {
+    const user = await this.userService.findOnebyID(createNoteDto.userId)
+    const newNote = new Note()
+    newNote.title = createNoteDto.title
+    newNote.description = createNoteDto.description
+    newNote.user = user
+    return this.noteRepository.save(newNote)
   }
 
   findAll() {
@@ -25,8 +27,13 @@ export class NoteService {
     return `This action returns a #${id} note`;
   }
 
-  update(id: number, updateNoteDto: UpdateNoteDto) {
-    return `This action updates a #${id} note`;
+  async update(id: string, updateNoteDto: UpdateNoteDto) {
+    const oldNote = await this.noteRepository.findOne({
+      where: {id: id}
+    }).catch(err => {
+      throw new BadRequestException('Invalid UUID.')
+    })
+    await this.noteRepository.update(oldNote.id, updateNoteDto)
   }
 
   remove(id: number) {

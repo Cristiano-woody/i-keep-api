@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 import UserAlreadyExistError from 'src/errors/UserAlreadyExistError';
 import InvalidCredentialsError from 'src/errors/InvalidCredentialsError';
+import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()
 export class UserService {
@@ -29,6 +30,7 @@ export class UserService {
     user.name = userData.name;
     user.email = userData.email;
     user.password_hash = await hash(userData.password, 6);
+    user.id = uuidv4()
     const userCreated = await this.userRepository.save(user);
     return userCreated;
   }
@@ -58,7 +60,7 @@ export class UserService {
       where: { id: id },
       relations: ['notes']
     }).catch(err => {
-      console.log('cheguei')
+      console.log(err)
       throw new BadRequestException('User not found')
     })
     if(user.id != id ) {
