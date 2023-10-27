@@ -1,4 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Note } from 'src/note/entities/note.entity';
+import { OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -16,4 +18,7 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(() => Note, (note) => note.user)
+  notes: Note[];
 }
