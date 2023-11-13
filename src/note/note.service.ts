@@ -23,6 +23,16 @@ export class NoteService {
     return this.noteRepository.find({relations:['user']});
   }
 
+  findAllByUser(userId: string) {
+    return this.noteRepository.find({
+      where: {
+        user: {
+          id: userId
+        }
+      }
+    })
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} note`;
   }
