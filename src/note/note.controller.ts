@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from "@nestjs/common";
 import { NoteService } from './note.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
@@ -22,18 +22,16 @@ export class NoteController {
     return this.noteService.findAllByUserId(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.noteService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
-    return this.noteService.update(id, updateNoteDto);
+  @Patch(':noteId')
+  update(@Param('noteId') noteId: string, @Body() updateNoteDto: UpdateNoteDto) {
+    if((updateNoteDto.title === undefined || updateNoteDto.title === null) && (updateNoteDto.description === undefined || updateNoteDto.description === null)) {
+      return new BadRequestException('Title or description is required.')
+    }
+    return this.noteService.update(noteId, updateNoteDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.noteService.remove(+id);
+    return this.noteService.remove(id);
   }
 }

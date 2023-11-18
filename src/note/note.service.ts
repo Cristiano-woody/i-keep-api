@@ -33,20 +33,16 @@ export class NoteService {
     })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} note`;
-  }
-
   async update(id: string, updateNoteDto: UpdateNoteDto) {
     const oldNote = await this.noteRepository.findOne({
       where: {id: id}
-    }).catch(err => {
+    }).catch(() => {
       throw new BadRequestException('Invalid UUID.')
     })
-    await this.noteRepository.update(oldNote.id, updateNoteDto)
+    return await this.noteRepository.update(oldNote.id, updateNoteDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} note`;
+  remove(id: string) {
+    return this.noteRepository.delete(id)
   }
 }
