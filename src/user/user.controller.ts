@@ -1,4 +1,3 @@
-// eslint-disable-next-line prettier/prettier
 import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/CreateUserDto';
 import { User } from 'src/user/entities/UserEntity';
