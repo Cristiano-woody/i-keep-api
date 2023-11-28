@@ -10,6 +10,6 @@ export type createNoteUseCaseResponse = {
   id: string
 }
 
-export interface CreateNoteUseCase {
+export interface ICreateNoteUseCase {
   execute(data: createNoteUseCaseRequest): Promise<createNoteUseCaseResponse>
 }

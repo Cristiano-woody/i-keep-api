@@ -1,5 +1,5 @@
 import { User } from "../../entities/User";
 
-export interface FindAllUsersUseCase {
+export interface IFindAllUsersUseCase {
   execute(): Promise<User[]>
 }

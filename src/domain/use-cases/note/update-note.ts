@@ -6,6 +6,6 @@ export type updateNoteUseCaseRequest = {
   id: string
 }
 
-export interface UpdateNoteUseCase {
+export interface IUpdateNoteUseCase {
   execute(data: updateNoteUseCaseRequest): Promise<Note>
 }

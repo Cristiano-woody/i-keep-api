@@ -14,6 +14,6 @@ export type createUserResponse = {
   notes?: Note[];
 }
 
-export interface CreateUserUseCase {
+export interface ICreateUserUseCase {
   execute(data: createUserRequest): Promise<createUserResponse>;
 }
