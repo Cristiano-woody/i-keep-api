@@ -1,5 +1,5 @@
 import { Note } from "../../entities/Note";
 
 export interface IFindAllNotesUseCase {
-  execute(): Promise<Note>
+  execute(): Promise<Note[]>
 }
