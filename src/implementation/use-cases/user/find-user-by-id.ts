@@ -1,5 +1,11 @@
-import { User } from "../../entities/User";
+import { User } from '../../../domain/entities/User';
+import {IUserRepository} from "../../protocols/user-repository";
+import {IFindUserByIdUseCase} from "../../../domain/use-cases/user/find-user-by-id";
 
-export interface IFindUserByIdUseCase {
-  execute(userId: string): Promise<User | undefined>
+export class FindUserByIdUseCase implements  IFindUserByIdUseCase{
+  constructor(private userRepository: IUserRepository) {
+  }
+  async execute(id: string): Promise<User | undefined> {
+    return await this.userRepository.findOneById(id)
+  }
 }
