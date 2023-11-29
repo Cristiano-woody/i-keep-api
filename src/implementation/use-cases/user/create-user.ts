@@ -3,10 +3,15 @@ import {IUserRepository} from "../../protocols/user-repository";
 import {User} from "../../../domain/entities/User";
 import {IUuidGenerate} from "../../helpers/uuid-generate";
 import {ICrypto} from "../../helpers/crypto";
+import { EmailAlreadyRegistered } from "../../../domain/errors/E-mail-already-registered";
 
 export class CreateUserUseCase implements  ICreateUserUseCase {
   constructor(private userRepository: IUserRepository, private uuidGenerate: IUuidGenerate, private crypto: ICrypto) {}
   async execute(data: createUserRequest): Promise<createUserResponse> {
+    const userExists = this.userRepository.findOneByEmail(data.email)
+    if(userExists) {
+      throw new EmailAlreadyRegistered()
+    }
     const newUser = new User()
     newUser.id = await this.uuidGenerate.execute()
     newUser.email = data.email
