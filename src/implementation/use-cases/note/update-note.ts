@@ -6,11 +6,11 @@ import { NoteNotFoundError } from "../../../domain/errors/note-not-found-error";
 export class UpdateNoteUseCase implements  IUpdateNoteUseCase {
   constructor(private noteRepository: INoteRepository) {}
 
-  execute(data: updateNoteUseCaseRequest): Promise<Note> {
-    const note = this.noteRepository.findOneById(data.id)
+  async execute(data: updateNoteUseCaseRequest, noteId: string): Promise<void> {
+    const note = await this.noteRepository.findOneById(data.id)
     if(note == undefined) {
       throw new NoteNotFoundError()
     }
-    return this.noteRepository.update(data)
+    await this.noteRepository.update(data, noteId)
   }
 }

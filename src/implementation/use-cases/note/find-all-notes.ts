@@ -6,6 +6,6 @@ export class FindAllNotesUseCase implements  IFindAllNotesUseCase{
   constructor(private noteRepository: INoteRepository) {}
 
   async execute(): Promise<Note[]> {
-    return this.noteRepository.findAll()
+    return await this.noteRepository.findAll()
   }
 }

@@ -6,10 +6,10 @@ export class RemoveNoteUseCase implements IRemoveNoteUseCase {
   constructor(private noteRepository: INoteRepository) {}
 
   async execute(noteId: string): Promise<void> {
-    const note = this.noteRepository.findOneById(noteId)
+    const note = await this.noteRepository.findOneById(noteId)
     if(note == undefined) {
       throw new NoteNotFoundError()
     }
-    await this.noteRepository.remove(noteId)
+    await this.noteRepository.remove(note)
   }
 }
