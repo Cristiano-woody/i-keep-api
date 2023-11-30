@@ -1,18 +1,18 @@
-import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/CreateUserDto';
 import { User } from 'src/user/entities/UserEntity';
 import { UserService } from 'src/user/user.service';
 import UserAlreadyExistError from 'src/errors/UserAlreadyExistError';
 import { AuthGuard } from 'src/auth/auth.guard';
+import {FindAllUsersUseCase} from "../implementation/use-cases/user/find-all-users";
 
 @Controller('/user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private findAllUsersService: FindAllUsersUseCase) {}
 
-  @UseGuards(AuthGuard)
   @Get()
-  async findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  async findAll(): Promise<any> {
+    return this.findAllUsersService.execute()
   }
 
   @Post()
