@@ -5,12 +5,12 @@ import {
 } from "../../../domain/use-cases/note/create-note";
 import {INoteRepository} from "../../protocols/note-repository";
 import {Note} from "../../../domain/entities/Note";
-import {IUuidGenerate} from "../../helpers/uuid-generate";
 import { IUserRepository } from "../../protocols/user-repository";
 import { UserNotFoundError } from "../../../domain/errors/user-not-found-error";
+import { v4 as uuidv4 } from 'uuid';
 
 export class CreateNoteUseCase implements  ICreateNoteUseCase{
-  constructor(private noteRepository: INoteRepository, private uuidGenerate: IUuidGenerate, private userRepository: IUserRepository) {
+  constructor(private noteRepository: INoteRepository, private userRepository: IUserRepository) {
   }
 
   async execute(data: createNoteUseCaseRequest): Promise<createNoteUseCaseResponse> {
@@ -19,7 +19,7 @@ export class CreateNoteUseCase implements  ICreateNoteUseCase{
       throw new UserNotFoundError()
     }
     const newNote = new Note()
-    newNote.id = await this.uuidGenerate.execute()
+    newNote.id = uuidv4()
     newNote.title = data.title
     newNote.description = data.description
     newNote.user_id = data.userId
