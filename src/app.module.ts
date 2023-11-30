@@ -1,12 +1,12 @@
-import { Inject, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entities/UserEntity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from './config';
 import { NoteModule } from './note/note.module';
-import { Note } from './note/entities/note.entity';
+import { UserSchema } from "./infra/db/typeorm/schemas/user-schema";
+import { NoteSchema } from "./infra/db/typeorm/schemas/note-schema";
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { Note } from './note/entities/note.entity';
         username: config.get('dbUser'),
         password: config.get('dbPassword'),
         database: config.get('DataBase'),
-        entities: [User, Note],
+        entities: [UserSchema, NoteSchema],
         synchronize: true,
       }),
     }),

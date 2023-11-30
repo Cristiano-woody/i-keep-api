@@ -5,7 +5,7 @@ import { User } from 'src/user/entities/UserEntity';
 import { Repository } from 'typeorm';
 import { hash, compare } from 'bcryptjs';
 import UserAlreadyExistError from 'src/errors/UserAlreadyExistError';
-import InvalidCredentialsError from 'src/errors/InvalidCredentialsError';
+import InvalidCredentialsError from 'src/domain/errors/InvalidCredentialsError';
 import { v4 as uuidv4 } from 'uuid'
 
 @Injectable()

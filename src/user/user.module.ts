@@ -6,11 +6,12 @@ import { UserService } from 'src/user/user.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { UserSchema } from "../infra/db/typeorm/schemas/user-schema";
 
 @Module({
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, UserSchema]),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
