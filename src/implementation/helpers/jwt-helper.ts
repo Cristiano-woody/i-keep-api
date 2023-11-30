@@ -1,3 +1,3 @@
-export interface  IJwtService {
+export interface  IJwtHelper {
   generateJwt(payload: any): Promise<string>
 }
