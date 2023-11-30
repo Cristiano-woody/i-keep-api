@@ -1,11 +1,11 @@
 import { ILoginUseCase, loginUseCaseRequest, loginUseCaseResponse } from "../../../domain/use-cases/user/login";
-import { IJwtService } from "../../helpers/jwt-service";
+import { IJwtHelper } from "../../helpers/jwt-helper";
 import { IUserRepository } from "../../protocols/user-repository";
 import invalidCredentialsError from "../../../domain/errors/InvalidCredentialsError";
 import InvalidCredentialsError from "../../../domain/errors/InvalidCredentialsError";
 
 export class LoginUseCase implements ILoginUseCase {
-  constructor(private jwtService: IJwtService, private userRepo: IUserRepository) {}
+  constructor(private jwtService: IJwtHelper, private userRepo: IUserRepository) {}
   async execute(data: loginUseCaseRequest): Promise<loginUseCaseResponse> {
     const user = await this.userRepo.findOneByEmail(data.login)
     if(user === undefined) {
