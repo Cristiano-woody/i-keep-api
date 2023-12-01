@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class CreateUserUseCase implements  ICreateUserUseCase {
   constructor(private userRepository: IUserRepository, private crypto: ICrypto) {}
   async execute(data: createUserRequest): Promise<createUserResponse> {
-    const userExists = this.userRepository.findOneByEmail(data.email)
+    const userExists = await this.userRepository.findOneByEmail(data.email)
     if(userExists) {
       throw new EmailAlreadyRegistered()
     }

@@ -7,7 +7,8 @@ export class UpdateNoteUseCase implements  IUpdateNoteUseCase {
   constructor(private noteRepository: INoteRepository) {}
 
   async execute(data: updateNoteUseCaseRequest, noteId: string): Promise<void> {
-    const note = await this.noteRepository.findOneById(data.id)
+    const note = await this.noteRepository.findOneById(noteId)
+    console.log('note')
     if(note == undefined) {
       throw new NoteNotFoundError()
     }

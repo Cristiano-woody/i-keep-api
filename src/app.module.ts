@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from './config';
-import { NoteModule } from './note/note.module';
 import { UserSchema } from "./infra/db/typeorm/schemas/user-schema";
 import { NoteSchema } from "./infra/db/typeorm/schemas/note-schema";
+import { UserModule } from './infra/modules/user/user.module';
+import { NoteModule } from './infra/modules/note/note.module';
 
 @Module({
   imports: [
