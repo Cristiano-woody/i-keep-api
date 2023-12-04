@@ -1,6 +1,6 @@
 import { forwardRef, Module } from "@nestjs/common";
 import { UserController } from './user.controller';
-import { AuthModule } from "../../../auth/auth.module";
+import { AuthModule } from "../auth/auth.module";
 import { getDataSourceToken, TypeOrmModule } from "@nestjs/typeorm";
 import { UserSchema } from "../../db/typeorm/schemas/user-schema";
 import { User } from "../../../domain/entities/User";
@@ -15,6 +15,9 @@ import { ICrypto } from "../../../implementation/helpers/crypto";
 import { Crypto } from "../../helpers/crypto";
 import { FindUserByIdUseCase } from "../../../implementation/use-cases/user/find-user-by-id";
 import { FindUserByEmailUseCase } from "../../../implementation/use-cases/user/find-user-by-email";
+import { LoginUseCase } from "../../../implementation/use-cases/user/login";
+import { IJwtHelper } from "../../../implementation/helpers/jwt-helper";
+import { JwtHelper } from "../../helpers/jwt-helper";
 
 @Module({
   controllers: [UserController],
@@ -31,6 +34,7 @@ import { FindUserByEmailUseCase } from "../../../implementation/use-cases/user/f
     }),
   ],
   providers: [
+    JwtHelper,
     Crypto,
     {
       provide: UserRepositoryTypeorm,
@@ -66,6 +70,13 @@ import { FindUserByEmailUseCase } from "../../../implementation/use-cases/user/f
         return new FindUserByEmailUseCase(userRepo)
       },
       inject: [UserRepositoryTypeorm]
+    },
+    {
+      provide: LoginUseCase,
+      useFactory: (userRepo: IUserRepository, jwt: IJwtHelper, crypto: ICrypto) => {
+        return new LoginUseCase(userRepo, jwt, crypto)
+      },
+      inject: [UserRepositoryTypeorm, JwtHelper, Crypto]
     }
   ],
   exports: [TypeOrmModule],

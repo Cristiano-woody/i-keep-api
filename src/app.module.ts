@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './infra/modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from './config';
 import { UserSchema } from "./infra/db/typeorm/schemas/user-schema";

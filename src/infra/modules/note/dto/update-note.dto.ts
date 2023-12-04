@@ -1,3 +1,9 @@
 import { Note } from "../../../../domain/entities/Note";
+import { IsUUID } from "class-validator";
 
-export type UpdateNoteDto = Partial<Omit<Note, "id">>
+export type UpdateNoteDtoBody = Partial<Omit<Note, "id">>
+
+export class UpdateNoteDtoParams {
+  @IsUUID()
+  id:string
+}

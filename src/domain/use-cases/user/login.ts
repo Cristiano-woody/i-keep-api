@@ -1,5 +1,5 @@
 export type loginUseCaseRequest = {
-  login: string
+  email: string
   password: string
 }
 export type loginUseCaseResponse = {

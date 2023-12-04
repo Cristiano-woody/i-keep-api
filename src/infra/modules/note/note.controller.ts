@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, UseGuards } from "@nestjs/common";
 import { CreateNoteDto } from './dto/create-note.dto';
-import { UpdateNoteDto } from './dto/update-note.dto';
+import { UpdateNoteDtoBody, UpdateNoteDtoParams } from './dto/update-note.dto';
 import { UserNotFoundError } from "../../../domain/errors/user-not-found-error";
 import { CreateNoteUseCase } from "../../../implementation/use-cases/note/create-note";
 import { FindAllNotesUseCase } from "../../../implementation/use-cases/note/find-all-notes";
@@ -8,6 +8,8 @@ import { FindAllNotesByUserIdUseCase } from "../../../implementation/use-cases/n
 import { RemoveNoteUseCase } from "../../../implementation/use-cases/note/remove-note";
 import { UpdateNoteUseCase } from "../../../implementation/use-cases/note/update-note";
 import { NoteNotFoundError } from "../../../domain/errors/note-not-found-error";
+import { RemoveNoteDto } from "./dto/remove-note.dto";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Controller('note')
 export class NoteController {
@@ -19,6 +21,7 @@ export class NoteController {
     private updateNote: UpdateNoteUseCase
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() createNoteDto: CreateNoteDto) {
     try {
@@ -35,6 +38,7 @@ export class NoteController {
     return await this.findAllNotes.execute()
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findAllByUserId(@Param('id') id: string) {
     try {
@@ -46,10 +50,11 @@ export class NoteController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateNoteDto: UpdateNoteDto) {
+  async update(@Param() params: UpdateNoteDtoParams, @Body() updateNoteDto: UpdateNoteDtoBody) {
     try {
-      return await this.updateNote.execute(updateNoteDto, id)
+      return await this.updateNote.execute(updateNoteDto, params.id)
     } catch (err) {
       if (err instanceof NoteNotFoundError) {
         return new BadRequestException(err.message)
@@ -57,10 +62,11 @@ export class NoteController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param() params: RemoveNoteDto) {
     try {
-      return await this.removeNote.execute(id)
+      return await this.removeNote.execute(params.id)
     } catch (err) {
       if (err instanceof NoteNotFoundError) {
         return new BadRequestException(err.message)

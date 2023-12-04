@@ -14,11 +14,23 @@ import { FindAllNotesUseCase } from "../../../implementation/use-cases/note/find
 import { FindAllNotesByUserIdUseCase } from "../../../implementation/use-cases/note/find-all-notes-by-user-id";
 import { RemoveNoteUseCase } from "../../../implementation/use-cases/note/remove-note";
 import { UpdateNoteUseCase } from "../../../implementation/use-cases/note/update-note";
+import { AuthModule } from "../auth/auth.module";
+import { JwtModule } from "@nestjs/jwt";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
   controllers: [NoteController],
   imports: [
-    TypeOrmModule.forFeature([UserSchema, User])
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: async (config:ConfigService) => ({
+        secret: config.get('JWT_SECRET_KEY'),
+        global: true,
+        signOptions: { expiresIn: '1h' }
+      })
+    }),
+    TypeOrmModule.forFeature([UserSchema, User]),
+    AuthModule
   ],
   providers: [
     {
