@@ -5,6 +5,6 @@ export interface INoteRepository {
     findAllByUserId(userId: string): Promise<Note[]>
     findAll(): Promise<Note[]>
     remove(note: Note): Promise<Note>
-    update(data: Partial<Note>, noteId: string): Promise<void>
+    update(data: Partial<Note>, noteId: string): Promise<Note>
     findOneById(noteId: string): Promise<Note | undefined>
 }
