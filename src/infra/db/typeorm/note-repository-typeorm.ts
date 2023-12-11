@@ -1,7 +1,6 @@
 import { INoteRepository } from "../../../implementation/protocols/note-repository";
 import { Repository } from "typeorm";
 import { Note } from "../../../domain/entities/Note";
-import { BadRequestException } from "@nestjs/common";
 
 export class NoteRepositoryTypeorm implements INoteRepository{
   constructor(private repo: Repository<Note>){}
@@ -33,8 +32,13 @@ export class NoteRepositoryTypeorm implements INoteRepository{
     return await this.repo.remove(note)
   }
 
-  async update(data: Partial<Note>, noteId: string): Promise<void> {
+  async update(data: Partial<Note>, noteId: string): Promise<Note> {
     await this.repo.update(noteId, data)
+    return this.repo.findOne({
+      where: {
+        id: noteId
+      }
+    })
   }
 
 }
