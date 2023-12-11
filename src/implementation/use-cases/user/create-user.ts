@@ -12,13 +12,14 @@ export class CreateUserUseCase implements  ICreateUserUseCase {
     if(userExists) {
       throw new EmailAlreadyRegistered()
     }
-    const newUser = new User()
-    newUser.id = uuidv4()
-    newUser.email = data.email
-    newUser.name = data.name
-    newUser.isActive = true
-    newUser.notes = []
-    newUser.password = await this.crypto.hash(data.password)
+    const newUser = new User({
+      id: uuidv4(),
+      email: data.email,
+      name: data.name,
+      isActive: true,
+      notes : [],
+      password: await this.crypto.hash(data.password),
+    })
     await this.userRepository.register(newUser)
     return ({
       id: newUser.id,
