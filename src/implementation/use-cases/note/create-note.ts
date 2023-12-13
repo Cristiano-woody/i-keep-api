@@ -18,7 +18,7 @@ export class CreateNoteUseCase implements  ICreateNoteUseCase{
     if(user == undefined) {
       throw new UserNotFoundError()
     }
-    const newNote = new Note({
+    const newNote = Note.create({
       id: uuidv4(),
       title: data.title,
       description: data.description,

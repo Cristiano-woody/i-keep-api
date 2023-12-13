@@ -15,11 +15,11 @@ describe('Test for find user by id use case.', () => {
     await userRepo.register(new User({id: "333", name: "aa", email: "aa@sds.com", password: "123", isActive: true}))
   });
 
-  it('should be able get user by id', async () => {
+  it('should be able get user by id and not throw error.', async () => {
     await expect(sut.execute("333")).resolves.not.toThrow()
   });
 
-  it('should be able get user by id', async () => {
+  it('should be able get user by id.', async () => {
     const user = await sut.execute("333")
     expect(user).ownProperty('email')
   });

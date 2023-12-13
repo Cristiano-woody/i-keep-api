@@ -12,7 +12,7 @@ export class CreateUserUseCase implements  ICreateUserUseCase {
     if(userExists) {
       throw new EmailAlreadyRegistered()
     }
-    const newUser = new User({
+    const newUser = User.create({
       id: uuidv4(),
       email: data.email,
       name: data.name,
