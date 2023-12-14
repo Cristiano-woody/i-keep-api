@@ -4,7 +4,17 @@
 
 ## Descrição
 
-O I Keep é um aplicativo desenvolvido com Nest.js, Angular e Ionic inspirado no Google Keep. Ele oferece uma plataforma simples e eficiente para fazer anotações rápidas, listas de tarefas, e organização de ideias. Com uma interface intuitiva e design limpo, o I Keep é projetado para facilitar a gestão de informações importantes em seu dia a dia.
+O I Keep é um aplicativo desenvolvido com Nest, Angular e Ionic inspirado no Google Keep. Ele oferece uma plataforma simples e eficiente para fazer anotações rápidas, listas de tarefas, e organização de ideias. Com uma interface intuitiva e design limpo, o I Keep é projetado para facilitar a gestão de informações importantes em seu dia a dia.
+
+## Considerações Técnicas e Decisões Arquiteturais
+
+A IKeep-api foi desenvolvida adotando os princípios da Clean Architecture, uma abordagem que visa desacoplar bibliotecas e frameworks do núcleo da aplicação. Essa arquitetura é altamente benéfica para a manutenção e escalabilidade do projeto, proporcionando uma estrutura organizada e de fácil compreensão para os desenvolvedores. Foi escolhido o framework Nest para desempenhar um papel extremamente importante na aplicação, e ele apresenta suas vantagens nos seguintes pontos:
+- Modularidade
+- Escalabilidade
+- Facilidade de testes
+- Injeção de dependência
+
+A IKeep-api é robustamente testada com uma ampla cobertura de testes unitários para cada caso de uso, proporcionando segurança e confiabilidade durante refatorações ou implementação de novas funcionalidades. A biblioteca Vitest foi adotada para facilitar a criação e execução desses testes, contribuindo para a estabilidade e manutenibilidade contínua do código. Como banco de dados, foi escolhido o PostgreSQL.
 
 ## Instalação
 
