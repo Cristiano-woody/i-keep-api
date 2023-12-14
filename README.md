@@ -8,12 +8,14 @@ O I Keep é um aplicativo desenvolvido com Nest.js, Angular e Ionic inspirado no
 
 ## Instalação
 
-1. Clone o Repositório:
+1. Certifique-se de que o Node.js na versao 20.10 esteja instalado em seu computador.
+
+2. Clone o Repositório:
    
 ```bash
 $ git clone https://github.com/Cristiano-woody/i-keep-api
 ```
-2. Instale as Dependências:
+3. Instale as Dependências:
 
 ```bash
 $ npm install
