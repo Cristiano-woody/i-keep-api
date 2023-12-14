@@ -19,7 +19,7 @@ $ git clone https://github.com/Cristiano-woody/i-keep-api
 $ npm install
 ```
   
-4. Suba um container Docker com o banco de dados PostgreSQL chamado i-keep. Para isso, você pode seguir o tutorial disponível em: (Tutorial)[https://felixgilioli.medium.com/como-rodar-um-banco-de-dados-postgres-com-docker-6aecf67995e1] .
+4. Suba um container Docker com o banco de dados PostgreSQL chamado i-keep. Para isso, você pode seguir o tutorial disponível em: [Tutorial](https://felixgilioli.medium.com/como-rodar-um-banco-de-dados-postgres-com-docker-6aecf67995e1).
 
 ## Executando o aplicativo
 
