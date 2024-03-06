@@ -1,5 +1,9 @@
 import { Note } from "../../entities/Note"
 
+export interface ICreateUserUseCase {
+  execute(data: createUserRequest): Promise<createUserResponse>;
+}
+
 export type createUserRequest = {
   name: string
   email: string
@@ -12,8 +16,4 @@ export type createUserResponse = {
   email: string
   isActive: boolean;
   notes?: Note[];
-}
-
-export interface ICreateUserUseCase {
-  execute(data: createUserRequest): Promise<createUserResponse>;
 }
