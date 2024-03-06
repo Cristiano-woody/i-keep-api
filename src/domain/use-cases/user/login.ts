@@ -1,3 +1,8 @@
+
+export interface ILoginUseCase {
+  execute(data: loginUseCaseRequest): Promise<loginUseCaseResponse>
+}
+
 export type loginUseCaseRequest = {
   email: string
   password: string
@@ -5,8 +10,4 @@ export type loginUseCaseRequest = {
 export type loginUseCaseResponse = {
   userId: string
   authToken: string
-}
-
-export interface ILoginUseCase {
-  execute(data: loginUseCaseRequest): Promise<loginUseCaseResponse>
 }
