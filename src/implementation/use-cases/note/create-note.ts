@@ -18,12 +18,14 @@ export class CreateNoteUseCase implements  ICreateNoteUseCase{
     if(user == undefined) {
       throw new UserNotFoundError()
     }
-    const newNote = Note.create({
-      id: uuidv4(),
-      title: data.title,
-      description: data.description,
-      user_id: data.userId
-    })
+
+    const newNote = Note.builder()
+    .withId(uuidv4())
+    .withTitle(data.title)
+    .withDescription(data.description)
+    .withUserId(data.userId)
+    .build()
+
     await this.noteRepository.create(newNote)
     return ({
       title: newNote.title,
