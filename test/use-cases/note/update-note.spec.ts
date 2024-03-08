@@ -12,24 +12,31 @@ describe('Test for update note use case.', () => {
   beforeEach(async () => {
     noteRepo = new NoteRepository()
     sut = new UpdateNoteUseCase(noteRepo)
-    await noteRepo.create(new Note({title: "title", description: "description", user_id: "123", id: "1234"}))
+    await noteRepo.create(
+      Note.builder()
+        .withId("1234")
+        .withTitle("title")
+        .withDescription("description")
+        .withUserId("123")
+        .build()
+    )
   });
 
   it('should be able to update note.', async () => {
-    const modifiedNote = {title: " modified title", description: " modified description"}
+    const modifiedNote = { title: " modified title", description: " modified description" }
 
     await expect(sut.execute(modifiedNote, "1234")).resolves.not.toThrow()
   });
 
   it('should be able to update note and confer returned properties.', async () => {
-    const modifiedNote = {title: " modified title", description: " modified description"}
+    const modifiedNote = { title: " modified title", description: " modified description" }
     const result = await sut.execute(modifiedNote, "1234")
     expect(result.description).toEqual(modifiedNote.description)
     expect(result.title).toEqual(modifiedNote.title)
   });
 
   it('must be able to update notes and check properties by searching the repository.', async () => {
-    const modifiedNote = {title: " modified title", description: " modified description"}
+    const modifiedNote = { title: " modified title", description: " modified description" }
 
     await sut.execute(modifiedNote, "1234")
 
@@ -40,7 +47,7 @@ describe('Test for update note use case.', () => {
   });
 
   it('should not be able to update note with invalid note id', async () => {
-    const modifiedNote = {title: " modified title", description: " modified description"}
+    const modifiedNote = { title: " modified title", description: " modified description" }
 
     await expect(sut.execute(modifiedNote, "invalidNoteId")).rejects.toThrow(new NoteNotFoundError())
   });
