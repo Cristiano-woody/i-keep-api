@@ -16,7 +16,15 @@ describe('Test for create note use case.', () => {
     noteRepo = new NoteRepository()
     userRepo = new UserRepository()
     sut = new CreateNoteUseCase(noteRepo, userRepo)
-    await userRepo.register(new User({id: "333", name: "aa", email: "aa@sds.com", password: "123", isActive: true}))
+    await userRepo.register(
+      User.builder()
+      .withId("333")
+      .withName("aa")
+      .withEmail("aa@sds.com")
+      .withPassword("123")
+      .withIsActive(true)
+      .build()
+      )
   });
 
   it('should be able to create a new note', async () => {
