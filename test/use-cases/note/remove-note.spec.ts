@@ -12,7 +12,14 @@ describe('', () => {
   beforeEach(async () => {
     repo = new NoteRepository()
     sut = new RemoveNoteUseCase(repo)
-    await repo.create(new Note({title: "title", description: "description", user_id: "123", id: "1234"}))
+    await repo.create(
+      Note.builder()
+      .withId("1234")
+      .withTitle("title")
+      .withDescription("description")
+      .withUserId("123")
+      .build()
+    )
   });
 
   it('should be able to remove note', async () => {
