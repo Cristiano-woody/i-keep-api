@@ -12,7 +12,15 @@ describe('Test for find user by email use case.', () => {
   beforeEach(async () => {
     userRepo = new UserRepository()
     sut = new FindUserByEmailUseCase(userRepo)
-    await userRepo.register(new User({id: "333", name: "aa", email: "aa@sds.com", password: "123", isActive: true}))
+    await userRepo.register(
+      User.builder()
+        .withId("333")
+        .withName("aa")
+        .withEmail("aa@sds.com")
+        .withPassword("123")
+        .withIsActive(true)
+        .build()
+    )
   });
 
   it('should be able to get user by email.', async () => {
