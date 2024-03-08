@@ -20,7 +20,15 @@ describe('Test for login use case.', () => {
     jwtHelper = new JwtHelperMock()
     crypto = new CryptoMock()
     sut = new LoginUseCase(userRepo, jwtHelper, crypto)
-    await userRepo.register(new User({id: "333", name: "aa", email: "aa@sds.com", password: await crypto.hash("123"), isActive: true}))
+    await userRepo.register(
+      User.builder()
+      .withId("123")
+      .withName("aa")
+      .withEmail("aa@sds.com")
+      .withPassword(await crypto.hash("123"))
+      .withIsActive(true)
+      .build()
+    )
   });
 
   it('should be able to login.', async () => {
