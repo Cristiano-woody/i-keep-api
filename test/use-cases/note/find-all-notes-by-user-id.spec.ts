@@ -17,7 +17,14 @@ describe('Test for find all notes by user id use case', () => {
     noteRepo = new NoteRepository()
     userRepo = new UserRepository()
     sut = new FindAllNotesByUserIdUseCase(noteRepo, userRepo)
-    await userRepo.register(new User({id: "333", name: "aa", email: "aa@sds.com", password: "123", isActive: true}))
+    await userRepo.register(
+    User.builder()
+    .withId("333")
+    .withName("aa")
+    .withEmail("aa@sds.com")
+    .withPassword("123")
+    .withIsActive(true)
+    .build())
   });
 
   it('should be able find all notes by user id.', async () => {
@@ -31,12 +38,14 @@ describe('Test for find all notes by user id use case', () => {
   });
 
   it('should be able to find all previously created notes by user ID', async () => {
-    await noteRepo.create(new Note({
-      id: "123",
-      title: "title",
-      description: "description",
-      user_id: "333",
-    }))
+    await noteRepo.create(
+      Note.builder()
+      .withId("123")
+      .withTitle("title")
+      .withDescription("description")
+      .withUserId("333")
+      .build()
+      )
 
     const notes = await sut.execute("333")
 
